@@ -1,0 +1,5 @@
+# Configuración básica para Hadoop JMX
+lowercaseOutputName: true
+lowercaseOutputLabelNames: true
+rules:
+  - pattern: ".*"

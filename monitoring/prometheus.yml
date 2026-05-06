@@ -1,0 +1,98 @@
+# my global config
+global:
+  scrape_interval: 15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+  # scrape_timeout is set to the global default (10s).
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          # - alertmanager:9093
+
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+  # - "first_rules.yml"
+  # - "second_rules.yml"
+
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: "prometheus"
+
+    # metrics_path defaults to '/metrics'
+    # scheme defaults to 'http'.
+
+    static_configs:
+      - targets: ["localhost:9090"]
+       # The label name is added as a label `label_name=<label_value>` to any timeseries scraped from this config.
+        labels:
+          app: "prometheus"
+  # Monitorización de nuestros 3 Brokers de Kafka
+  # Prometheus usará el DNS interno de Docker para encontrar estos contenedores
+  - job_name: "kafka-brokers"
+    static_configs:
+      - targets: 
+        - "kafka-broker-1:9091"
+        - "kafka-broker-2:9091"
+        - "kafka-broker-3:9091"
+  # Monitorización de nuestros 3 Controllers de Kafka
+  # Prometheus usará el DNS interno de Docker para encontrar estos contenedores
+  - job_name: "kafka-controllers"
+    static_configs:
+      - targets: 
+        - "kafka-controller-1:9091"
+        - "kafka-controller-2:9091"
+        - "kafka-controller-3:9091"
+
+  - job_name: "kafka"
+    static_configs:
+      - targets: 
+        - "kafka-controller-1:9091"
+        - "kafka-controller-2:9091"
+        - "kafka-controller-3:9091"
+        - "kafka-broker-1:9091"
+        - "kafka-broker-2:9091"
+        - "kafka-broker-3:9091"
+
+  # Scrape del calculador de Lag
+  - job_name: "kafka-exporter"
+    static_configs:
+      - targets: ["kafka-exporter:9308"]
+
+  # Monitorización de nuestro Clúster de Spark
+  # Scrape del Spark Master
+  - job_name: "spark-master"
+    metrics_path: '/metrics/master/prometheus'
+    static_configs:
+      - targets:
+        - "spark-master:8080"
+
+  # Scrape de los Spark Workers
+  - job_name: "spark-workers"
+    metrics_path: '/metrics/prometheus'
+    static_configs:
+      - targets: 
+        - "spark-worker-1:8081"
+        - "spark-worker-2:8081"
+        - "spark-worker-3:8081"
+
+  # Scrape del Cerebro de HDFS (NameNode)
+  - job_name: "hadoop-namenode"
+    static_configs:
+      - targets: ["namenode:9091"]
+
+  # Scrape del Cerebro de HDFS (NameNode)
+  - job_name: "hadoop-secondarynamenode"
+    static_configs:
+      - targets: ["secondary_namenode:9091"]
+
+  # Scrape de los Discos de HDFS (DataNodes)
+  - job_name: "hadoop-datanodes"
+    static_configs:
+      - targets: 
+        - "datanode1:9091"
+        - "datanode2:9091"
+        - "datanode3:9091"
