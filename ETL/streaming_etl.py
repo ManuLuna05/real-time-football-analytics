@@ -6,6 +6,7 @@ from pyspark.sql.types import (
     StructType, StructField, StringType, DoubleType, BooleanType,
 )
 import json, requests
+from datetime import datetime, timezone
 
 # CONFIGURACIÓN
 KAFKA_SERVERS = "kafka-broker-1:9092"
@@ -72,6 +73,10 @@ def write_batch(df, epoch_id):
     try:
         rows = df.collect() # Recogemos las filas del DataFrame como una lista de Row objects
         records = [r.asDict(recursive=True) for r in rows] # Convertimos cada fila a un diccionario (esto es necesario para enviarlo a Elasticsearch)
+        # Añadimos timestamp ISO 8601 a cada documento para que Grafana pueda filtrar por tiempo
+        ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        for rec in records:
+            rec["timestamp"] = ts
         send_to_elasticsearch(records) # Enviamos la lista de registros a Elasticsearch usando la función definida anteriormente
         print(f"[OK] Batch {epoch_id} → Elasticsearch ({len(records)} docs)") 
     except Exception as e:

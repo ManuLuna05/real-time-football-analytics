@@ -73,7 +73,7 @@ La culminación del pipeline de datos se materializa en los paneles visuales de 
 *   **Rendimiento Individual:** Análisis de ratios de eficacia en pases, bloqueos, robos clave y precisión de tiro a puerta.
 *   **Ajustes de Entrenamiento:** Identificación de jugadores con tasas de degradación física anómalas respecto a la media del equipo para derivarlos a sesiones de preparación física específica.
 
-![Ejemplo 5](img/img5.png "Salida de Compass: R1")
+![Ejemplo 5](img/img4.png "Salida de Compass: R1")
 
 ---
 

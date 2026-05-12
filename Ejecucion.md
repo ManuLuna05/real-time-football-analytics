@@ -290,19 +290,28 @@ Usa `eventos_zona_defensa`, `eventos_zona_medio`, `eventos_zona_ataque`.
 
 Para limpiar los datos del partido anterior y empezar uno nuevo:
 
-```bash
-# 1. Para el generador y el streaming ETL con Ctrl+C en sus terminales
+### 1. Para el generador y el streaming ETL con Ctrl+C en sus terminales
+Si el ETL está en otra terminal, deténlo con Ctrl+C.
+Si dejó un job en espera, mata la app vieja desde Spark Master:
+Abre http://localhost:8080 y usa el enlace (kill) junto a la app antigua.
 
+![Ejemplo 5](img/img5.png "Salida de Compass: R1")
+
+```bash
 # 2. Borra el índice de Elasticsearch (datos del partido anterior)
 curl -X DELETE http://localhost:9200/football_metrics
 
-# 3. (Opcional) Borra los checkpoints de Spark para empezar limpio
-docker exec namenode hdfs dfs -rm -r /checkpoints/streaming_etl
+# 3. Borra los checkpoints de Spark para empezar limpio
+#    Usa bash -lc para evitar errores de ruta desde Docker en Windows.
+docker exec namenode bash -lc 'hdfs dfs -rm -r /checkpoints/streaming_etl'
 
-# 4. Vuelve a lanzar el ETL Streaming
+# 4. Copia los scripts ETL al contenedor Spark si no lo has hecho aún
+docker cp ./ETL spark-master:/opt/spark/ETL
+
+# 5. Vuelve a lanzar el ETL Streaming
 docker exec spark-master /opt/spark/bin/spark-submit --master spark://spark-master:7077 --packages org.apache.spark:spark-sql-kafka-0-10_2.13:4.0.1 /opt/spark/ETL/streaming_etl.py
 
-# 5. Vuelve a lanzar el generador (el nuevo match_id se genera automáticamente)
+# 6. Vuelve a lanzar el generador (el nuevo match_id se genera automáticamente)
 python ETL/streaming_generator.py
 ```
 
