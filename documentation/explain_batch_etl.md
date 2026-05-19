@@ -126,4 +126,4 @@ spark.stop()
 
 Al final se cierra la sesión de Spark. Sin esto, el proceso Spark seguiría consumiendo recursos del sistema aunque el script haya terminado de hacer su trabajo.
 
-Volver atrás: [Introducción](/Proyecto.md)
+Volver atrás: [Introducción](/Readme.md)
