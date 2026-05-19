@@ -225,4 +225,4 @@ query.awaitTermination()
 - **`trigger(processingTime="10 seconds")`**: controla cada cuánto se procesa un batch. Sin esto, Spark procesaría en continuo tan rápido como pudiera, lo que saturaria Elasticsearch con demasiadas actualizaciones. Con 10 segundos se consigue un equilibrio.
 - **`awaitTermination()`**: bloquea el script en este punto para que no termine solo. El stream necesita seguir corriendo indefinidamente, y esta línea es la que lo mantiene vivo hasta que alguien lo para manualmente.
 
-Volver atrás: [Introducción](/Proyecto.md)
+Volver atrás: [Introducción](/Readme.md)
