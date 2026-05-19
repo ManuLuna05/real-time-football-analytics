@@ -365,4 +365,4 @@ El bucle principal es lo que mantiene la simulación corriendo indefinidamente. 
 
 Si se pulsa `Ctrl+C` para parar el script, el bloque `finally` se encarga de cerrar la conexión con Kafka de forma ordenada, liberando recursos.
 
-Volver atrás: [Introducción](/Proyecto.md)
+Volver atrás: [Introducción](/Readme.md)
