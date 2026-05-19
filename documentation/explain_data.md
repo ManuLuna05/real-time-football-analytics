@@ -133,4 +133,4 @@ Cada 10 segundos, el ETL Streaming escribe estos datos en dos sitios:
 
 - **HDFS (Parquet)**: guarda una copia de cada batch en modo `append`, acumulando el historial completo de cómo han ido evolucionando las métricas durante el partido. De aquí los lee Grafana.
 
-Volver atrás: [Introducción](/Proyecto.md)
+Volver atrás: [Introducción](/Readme.md)
