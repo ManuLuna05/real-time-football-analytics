@@ -104,4 +104,4 @@ Aunque los dos dashboards muestran datos del mismo partido, tienen usos compleme
 
 La idea es usar Grafana como pantalla de fondo siempre visible, y acudir a Kibana cuando algo en Grafana llame la atención: por ejemplo, si la estamina media baja mucho, se abre Kibana para ver exactamente quiénes son los jugadores más agotados y decidir el cambio con datos en la mano.
 
-Volver atrás: [Introducción](/Proyecto.md)
+Volver atrás: [Introducción](/Readme.md)
